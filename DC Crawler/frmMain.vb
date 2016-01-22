@@ -22,8 +22,6 @@ Public Class frmMain
 
 #Region "ListView Column Sorting"
 
-    ' 이걸로 다 비교하면 쉽다.
-    ' 날짜도 비교해주지 제목도 비교해주지 . 근데 "1 KB"이런건 못하니 예전엔 따로 만들어 줬지
     Declare Unicode Function StrCmpLogicalW Lib "shlwapi.dll" (ByVal s1 As String, ByVal s2 As String) As Integer
 
     Public Shared Function ComparePath(addr1 As String, addr2 As String) As Integer
@@ -125,8 +123,6 @@ Public Class frmMain
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        ' 노가다하기 싫어서 만들었다... 는 거짓말이고..
-        ' 물론 노가다를 경험하고나서야 생각이 나 만들었다
         Dim columnsTrans As New List(Of ColHeader)
         For Each column As ColumnHeader In lvDC.Columns
             columnsTrans.Add(New ColHeader(column.Text, column.Width, column.TextAlign, True))
@@ -164,8 +160,6 @@ Public Class frmMain
 
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
 
-        ' 비동기문을 쓰기 때문에 여러번 버튼을 누르면 안된다.
-        ' 뭐 달리 아는 방법도 없어서 이 방법을 이용했다. 비동기가 끝나면 프로그래스바의 값이 최댓값과 같아질 거니깐
         If pbStatus.Maximum = pbStatus.Value Then
             loadedId = tbId.Text
             author = tbAuthor.Text
@@ -175,16 +169,7 @@ Public Class frmMain
             pbStatus.Value = 0
 
             For i As Integer = numStartPage.Value To numLastPage.Value
-                'If cbGaeNeum.Checked Then
-                '    GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={tbId.Text}&page={i}&exception_mode=recommend")
-                'Else
-                ' 가독성은 별반 차이 없는 것 같습니다.
                 GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={tbId.Text}&page={i}")
-
-                ' 타이머로 바꾼다.
-                'Threading.Thread.Sleep(numDelay.Validate)
-
-                'End If
             Next
         End If
     End Sub
@@ -217,23 +202,15 @@ Public Class frmMain
                 map.star = .Groups(6).Value
             End With
 
-            '' 고정닉에 특별한 별을 달아주자
             If Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_default.gif") Then
-                ' 반고정닉
-                'map.author = "☆|" & map.author & "|☆"
                 map.level = 1
             ElseIf Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_fix.gif") Then
-                ' 고정닉
-                'map.author = "★|" & map.author & "|★"
                 map.level = 2
             Else
-                ' 유동닉
                 map.level = 0
             End If
 
             If map.title.Contains("</a>") Then
-                ' 오늘 알게된 가장 충격적인 사실은 Split가 Char단위로 문장을 끊는 다는 것이였다.
-                ' 여태까지 그것도 모르고 잘 사용했던 나날을 돌아보니 무척 신기했다.
                 map.comments = map.title.Split(New String() {"<em>["}, StringSplitOptions.None)(1).Split("]"c)(0).Split("/"c)(0)
                 map.title = map.title.Split("</a>")(0)
             Else
@@ -298,10 +275,7 @@ Public Class frmMain
             Dim Bytes As Byte() = Encoding.UTF8.GetBytes(Data)
 
             Dim Request As WebRequest
-            '파폭 네트워크 탭에서 헤더를 볼 수 있다.
-            'get 방식
-            'm.dcinside.com/comment_more_new.php?id=programming&no=  &com_page=  &write=write
-            'post 방식
+
             Request = WebRequest.Create("http://m.dcinside.com/comment_more.php")
             Request.Method = "POST"
             Request.ContentType = "application/x-www-form-urlencoded"
@@ -316,7 +290,6 @@ Public Class frmMain
 
             Dim HtmlPartial As String = Reader.ReadToEnd
 
-            ' Parse Comment
             Dim Matches As MatchCollection = Regex.Matches(HtmlPartial, DCComment)
             For Each Match As Match In Matches
                 Dim com As DCCommenttructure
@@ -326,24 +299,17 @@ Public Class frmMain
                     com.dates = .Groups(3).Value
                 End With
 
-                ' 첫 번째 분기는 유동닉을 검출하기 위한 것이다
                 If com.author.Contains("<span class=""") Then
-                    ' 유동닉은 아이피를 같이 출력하기 때문에 구조가 고정닉과 다르다.
-                    ' 그리고 오른쪽 끝에 공백이 생기더라.
                     com.author = com.author.Substring(1)
                     com.author = com.author.Remove(com.author.IndexOf("]<span class=""")).Trim
                 Else
-                    ' Q.Split는 문장단위로 끊는 거 아니였나요?
-                    ' 네 아닙니다.
                     com.author = com.author.Substring(com.author.IndexOf(""">[") + 3)
                     com.author = com.author.Remove(com.author.IndexOf("<img src="""))
                 End If
 
                 If Match.Groups(0).Value.Contains("/gallercon1.gif") Then
-                    ' 반고정닉
                     com.level = 1
                 ElseIf Match.Groups(0).Value.Contains("/gallercon.gif") Then
-                    ' 고정닉
                     com.level = 2
                 Else
                     com.level = 0

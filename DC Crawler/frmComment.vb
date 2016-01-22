@@ -8,8 +8,6 @@
 
 Public Class frmComment
 
-    ' 이 방법도 처음사용한다.
-    ' 왜냐면 이게 될 줄은 꿈에도 몰랐거든요
     Public Sub New(sender As List(Of frmMain.DCCommenttructure))
 
         ' 디자이너에서 이 호출이 필요합니다.

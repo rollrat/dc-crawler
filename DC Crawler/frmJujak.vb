@@ -61,5 +61,4 @@ Public Class frmJujak
 
     End Sub
 
-
 End Class
