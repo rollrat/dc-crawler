@@ -193,9 +193,9 @@ Partial Class frmMain
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(401, 9)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(226, 15)
+        Me.Label4.Size = New System.Drawing.Size(214, 15)
         Me.Label4.TabIndex = 9
-        Me.Label4.Text = "Copyright (c) Koromo. All right reserved."
+        Me.Label4.Text = "Copyright (c) rollrat. All right reserved."
         '
         'StatusStrip1
         '
