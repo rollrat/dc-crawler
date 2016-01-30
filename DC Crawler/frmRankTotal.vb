@@ -13,7 +13,7 @@ Imports System.Net
 Imports System.Text
 Imports System.IO
 
-Public Class frmRankCom
+Public Class frmRankTotal
 
     Private Sub lvDC_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lvDC.ColumnClick
 
@@ -63,11 +63,17 @@ Public Class frmRankCom
     Dim i As Integer
     Dim lastwaiting As Boolean
 
-    Private lists0 As New Dictionary(Of String, Integer)
-    Private lists1 As New Dictionary(Of String, Integer)
-    Private lists2 As New Dictionary(Of String, Integer)
+    Public Structure DCTotlaRanking
+        Dim board As Integer
+        Dim comment As Integer
+        Dim name As String
+    End Structure
 
-    Private Const max_partition As Integer = 10
+    Private lists0 As New Dictionary(Of String, DCTotlaRanking)
+    Private lists1 As New Dictionary(Of String, DCTotlaRanking)
+    Private lists2 As New Dictionary(Of String, DCTotlaRanking)
+
+    Private Const max_partition As Integer = 2
 
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
         If pbStatus.Maximum = pbStatus.Value Then
@@ -81,7 +87,7 @@ Public Class frmRankCom
             currentpage = startpage
             lastpage = numLastPage.Value
             commentcount = 0
-            remainpage = 50
+            remainpage = max_partition
             lastwaiting = False
 
             tChkFinish.Start()
@@ -92,13 +98,12 @@ Public Class frmRankCom
         If lastwaiting AndAlso commentcount <= 0 Then
             tChkFinish.Stop()
         End If
-        If remainpage > 0 AndAlso commentcount <= 0 Then
-            'If remainpage + startpage + max_partition <= lastpage Then
-            If currentpage + remainpage + max_partition <= lastpage Then
-                For i As Integer = currentpage To currentpage + remainpage - 1
+        If remainpage >= max_partition AndAlso commentcount <= 0 Then
+            If currentpage + max_partition <= lastpage Then
+                For i As Integer = currentpage To currentpage + max_partition - 1
                     GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={tbId.Text}&page={i}")
                 Next
-                currentpage += remainpage
+                currentpage += max_partition
                 remainpage = 0
             ElseIf lastwaiting = False Then
                 For i As Integer = currentpage To lastpage
@@ -115,6 +120,14 @@ Public Class frmRankCom
         AddHandler wclient.DownloadStringCompleted, AddressOf webClient_DownloadStringCompleted
         wclient.DownloadStringAsync(New Uri(addr))
     End Sub
+
+    Private Function CutAuthor(ByVal author As String)
+        If author.Length > 6 Then
+            Return author.Substring(0, 6)
+        Else
+            Return author
+        End If
+    End Function
 
     Private Sub webClient_DownloadStringCompleted(ByVal sender As Object, ByVal e As DownloadStringCompletedEventArgs)
         Dim Result As New List(Of DCMapStructure)
@@ -134,6 +147,39 @@ Public Class frmRankCom
                 map.title = map.title.Split("</a>")(0)
             Else
                 map.comments = 0
+            End If
+
+            Dim tmp As DCTotlaRanking
+            tmp.board = 0
+            tmp.comment = 0
+            tmp.name = map.author
+            If Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_default.gif") Then
+                map.level = 1
+                If Not lists1.ContainsKey(CutAuthor(map.author)) Then
+                    lists1.Add(CutAuthor(map.author), tmp)
+                End If
+                tmp = lists1(CutAuthor(map.author))
+                If tmp.name <> map.author Then tmp.name = map.author
+                tmp.board += 1
+                lists1(CutAuthor(map.author)) = tmp
+            ElseIf Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_fix.gif") Then
+                map.level = 2
+                If Not lists2.ContainsKey(CutAuthor(map.author)) Then
+                    lists2.Add(CutAuthor(map.author), tmp)
+                End If
+                tmp = lists2(CutAuthor(map.author))
+                If tmp.name <> map.author Then tmp.name = map.author
+                tmp.board += 1
+                lists2(CutAuthor(map.author)) = tmp
+            Else
+                map.level = 0
+                If Not lists0.ContainsKey(CutAuthor(map.author)) Then
+                    lists0.Add(CutAuthor(map.author), tmp)
+                End If
+                tmp = lists0(CutAuthor(map.author))
+                If tmp.name <> map.author Then tmp.name = map.author
+                tmp.board += 1
+                lists0(CutAuthor(map.author)) = tmp
             End If
 
             Dim notice As String = map.notice
@@ -197,24 +243,34 @@ Public Class frmRankCom
                     com.author = com.author.Remove(com.author.IndexOf("<img src="""))
                 End If
 
+                Dim tmp As DCTotlaRanking
+                tmp.board = 0
+                tmp.comment = 0
+                tmp.name = com.author
                 If Match.Groups(0).Value.Contains("/gallercon1.gif") Then
                     com.level = 1
-                    If Not lists1.ContainsKey(com.author) Then
-                        lists1.Add(com.author, 0)
+                    If Not lists1.ContainsKey(CutAuthor(com.author)) Then
+                        lists1.Add(CutAuthor(com.author), tmp)
                     End If
-                    lists1(com.author) += 1
+                    tmp = lists1(CutAuthor(com.author))
+                    tmp.comment += 1
+                    lists1(CutAuthor(com.author)) = tmp
                 ElseIf Match.Groups(0).Value.Contains("/gallercon.gif") Then
                     com.level = 2
-                    If Not lists2.ContainsKey(com.author) Then
-                        lists2.Add(com.author, 0)
+                    If Not lists2.ContainsKey(CutAuthor(com.author)) Then
+                        lists2.Add(CutAuthor(com.author), tmp)
                     End If
-                    lists2(com.author) += 1
+                    tmp = lists2(CutAuthor(com.author))
+                    tmp.comment += 1
+                    lists2(CutAuthor(com.author)) = tmp
                 Else
                     com.level = 0
-                    If Not lists0.ContainsKey(com.author) Then
-                        lists0.Add(com.author, 0)
+                    If Not lists0.ContainsKey(CutAuthor(com.author)) Then
+                        lists0.Add(CutAuthor(com.author), tmp)
                     End If
-                    lists0(com.author) += 1
+                    tmp = lists0(CutAuthor(com.author))
+                    tmp.comment += 1
+                    lists0(CutAuthor(com.author)) = tmp
                 End If
             Next
 
@@ -232,36 +288,48 @@ Public Class frmRankCom
             Dim list As New List(Of DCRank)
             Dim count As New List(Of Integer)
             Dim index As Integer = 1
-            Dim pair As KeyValuePair(Of String, Integer)
+            Dim pair As KeyValuePair(Of String, DCTotlaRanking)
             lvDC.Items.Clear()
             For Each pair In lists0
                 Dim tmp As DCRank
-                tmp.name = pair.Key
-                tmp.level = 0
-                tmp.count = pair.Value
-                tmp.index = index
+                With tmp
+                    .name = pair.Value.name
+                    .level = 0
+                    .count = pair.Value.board
+                    .ccount = pair.Value.comment
+                    .score = .count * 2.5 + .ccount * 1.5
+                    .index = index
+                End With
                 list.Add(tmp)
-                count.Add(tmp.count)
+                count.Add(tmp.score)
                 index += 1
             Next
             For Each pair In lists1
                 Dim tmp As DCRank
-                tmp.name = pair.Key
-                tmp.level = 1
-                tmp.count = pair.Value
-                tmp.index = index
+                With tmp
+                    .name = pair.Value.name
+                    .level = 1
+                    .count = pair.Value.board
+                    .ccount = pair.Value.comment
+                    .score = .count * 2.5 + .ccount * 1.5
+                    .index = index
+                End With
                 list.Add(tmp)
-                count.Add(tmp.count)
+                count.Add(tmp.score)
                 index += 1
             Next
             For Each pair In lists2
                 Dim tmp As DCRank
-                tmp.name = pair.Key
-                tmp.level = 2
-                tmp.count = pair.Value
-                tmp.index = index
+                With tmp
+                    .name = pair.Value.name
+                    .level = 2
+                    .count = pair.Value.board
+                    .ccount = pair.Value.comment
+                    .score = .count * 2.5 + .ccount * 1.5
+                    .index = index
+                End With
                 list.Add(tmp)
-                count.Add(tmp.count)
+                count.Add(tmp.score)
                 index += 1
             Next
             Dim listarray = list.ToArray
@@ -283,6 +351,8 @@ Public Class frmRankCom
                                                 i.index,
                                                 rank,
                                                 i.name,
+                                                i.score,
+                                                i.ccount,
                                                 i.count,
                                                 _a,
                                                 _b,

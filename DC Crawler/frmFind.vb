@@ -65,7 +65,10 @@ Public Class frmFind
     Public Const DCBoardIp As String = "<li class=""li_ip"">(\d+\.\d+)"
     Public Const DCCommentIp As String = "<span class=""m_list_text_bt2"">(\d+\.\d+)"
 
-    Private Const max_partition As Integer = 10
+    Public activetime_board(24) As Integer
+    Public activetime_comment(24) As Integer
+
+    Private Const max_partition As Integer = 1
 
     Private Sub bStart_Click(sender As Object, e As EventArgs) Handles bStart.Click
         If pbStatus.Maximum = pbStatus.Value Then
@@ -79,8 +82,15 @@ Public Class frmFind
             currentpage = startpage
             lastpage = numLastPage.Value
             commentcount = 0
-            remainpage = 50
+            remainpage = max_partition
             lastwaiting = False
+
+            For i As Integer = 0 To 23
+                activetime_board(i) = 0
+                activetime_comment(i) = 0
+            Next
+
+            bTrace.Enabled = True
 
             If pAuthor.Checked Then
                 pIp.Enabled = False
@@ -96,16 +106,14 @@ Public Class frmFind
 
     Private Sub tChkFinish_Tick(sender As Object, e As EventArgs) Handles tChkFinish.Tick
         If lastwaiting AndAlso commentcount <= 0 Then
-            pAuthor.Enabled = True
-            pIp.Enabled = True
             tChkFinish.Stop()
         End If
-        If remainpage > 0 AndAlso commentcount <= 0 Then
-            If remainpage + startpage + max_partition <= lastpage Then
-                For i As Integer = currentpage To currentpage + remainpage - 1
+        If remainpage >= max_partition AndAlso commentcount <= 0 Then
+            If currentpage + max_partition <= lastpage Then
+                For i As Integer = currentpage To currentpage + max_partition - 1
                     GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={tbId.Text}&page={i}")
                 Next
-                currentpage += remainpage
+                currentpage += max_partition
                 remainpage = 0
             ElseIf lastwaiting = False Then
                 For i As Integer = currentpage To lastpage
@@ -134,10 +142,11 @@ Public Class frmFind
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
                 map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value
+                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
                 map.clicks = .Groups(5).Value
                 map.star = .Groups(6).Value
             End With
+
             If map.title.Contains("</a>") Then
                 map.comments = map.title.Split(New String() {"<em>["}, StringSplitOptions.None)(1).Split("]"c)(0).Split("/"c)(0)
                 map.title = map.title.Split("</a>")(0)
@@ -176,12 +185,14 @@ Public Class frmFind
                                                 replace(map.title),
                                                 map.author,
                                                 map.dates}))
+            activetime_board(map.dates.Substring("0000.00.00 ".Length, 2)) += 1
             If map.clicks = -1 Then
                 lvi.BackColor = Color.Beige
             End If
             i += 1
         Next
         remainpage += 1
+        On Error Resume Next
         pbStatus.Value += 1
         lPageRemain.Text = $"{pbStatus.Value}/{pbStatus.Maximum}"
     End Sub
@@ -278,6 +289,7 @@ Public Class frmFind
                                                     replace(map.title),
                                                     map.author,
                                                     map.dates}))
+                activetime_board(map.dates.Substring("0000.00.00 ".Length, 2)) += 1
                 lvi.BackColor = Color.Beige
                 i += 1
             Next
@@ -320,6 +332,10 @@ Public Class frmFind
             End If
         End If
         File.WriteAllText(System.IO.Directory.GetCurrentDirectory & "\Result_" & tbAuthor.Text & ".txt", builder.ToString)
+    End Sub
+
+    Private Sub bTrace_Click(sender As Object, e As EventArgs) Handles bTrace.Click
+        frmActiveTime.Show()
     End Sub
 
 End Class

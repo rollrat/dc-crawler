@@ -55,6 +55,7 @@ Partial Class frmFind
         Me.numIpSecond = New System.Windows.Forms.NumericUpDown()
         Me.pAuthor = New System.Windows.Forms.RadioButton()
         Me.pIp = New System.Windows.Forms.RadioButton()
+        Me.bTrace = New System.Windows.Forms.Button()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -328,12 +329,24 @@ Partial Class frmFind
         Me.pIp.Text = "IP"
         Me.pIp.UseVisualStyleBackColor = True
         '
+        'bTrace
+        '
+        Me.bTrace.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.bTrace.Enabled = False
+        Me.bTrace.Location = New System.Drawing.Point(146, 373)
+        Me.bTrace.Name = "bTrace"
+        Me.bTrace.Size = New System.Drawing.Size(128, 30)
+        Me.bTrace.TabIndex = 23
+        Me.bTrace.Text = "Activity Time"
+        Me.bTrace.UseVisualStyleBackColor = True
+        '
         'frmFind
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(953, 435)
+        Me.Controls.Add(Me.bTrace)
         Me.Controls.Add(Me.pIp)
         Me.Controls.Add(Me.pAuthor)
         Me.Controls.Add(Me.numIpSecond)
@@ -403,4 +416,5 @@ Partial Class frmFind
     Friend WithEvents pbComment As ToolStripProgressBar
     Friend WithEvents lPageRemain As ToolStripStatusLabel
     Friend WithEvents lCommentRemain As ToolStripStatusLabel
+    Friend WithEvents bTrace As Button
 End Class

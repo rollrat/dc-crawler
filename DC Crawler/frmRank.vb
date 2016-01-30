@@ -75,7 +75,7 @@ Public Class frmRank
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
                 map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value
+                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
                 map.clicks = .Groups(5).Value
                 map.star = .Groups(6).Value
             End With
@@ -109,8 +109,21 @@ Public Class frmRank
         Dim name As String
         Dim level As Integer
         Dim count As Integer
+        Dim ccount As Integer
+        Dim score As Integer
         Dim index As Integer
     End Structure
+
+    'Public Class RankComparer
+    '    Implements IComparer
+
+    '    Public Function Compare(x As Object, y As Object) As Integer Implements IComparer.Compare
+    '        Return x.count > y.count
+    '    End Function
+    'End Class
+    'Public Shared Function GetPathComparer() As IComparer
+    '    Return CType(New RankComparer(), IComparer)
+    'End Function
 
     Private Sub update_lv()
         If pbStatus.Maximum = pbStatus.Value Then
@@ -153,7 +166,7 @@ Public Class frmRank
             Dim rank As Integer = 1
             Array.Sort(count.ToArray, listarray)
             Array.Reverse(listarray)
-            ' step -1도 되지만 귀찮다
+            'Array.Sort(listarray, GetPathComparer())
             Dim _0 As Integer = 1
             Dim _1 As Integer = 1
             Dim _2 As Integer = 1

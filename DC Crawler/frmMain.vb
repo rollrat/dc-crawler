@@ -130,6 +130,8 @@ Public Class frmMain
         lvDC.Columns.Clear()
         lvDC.Columns.AddRange(columnsTrans.ToArray)
 
+        bLoad.PerformClick()
+
     End Sub
 
 #End Region
@@ -197,7 +199,7 @@ Public Class frmMain
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
                 map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value
+                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
                 map.clicks = .Groups(5).Value
                 map.star = .Groups(6).Value
             End With
@@ -356,6 +358,7 @@ Public Class frmMain
         If e.KeyCode = Keys.F3 Then frmJujak.Show()
         If e.KeyCode = Keys.F4 Then frmRank.Show()
         If e.KeyCode = Keys.F5 Then frmRankCom.Show()
+        If e.KeyCode = Keys.F6 Then frmRankTotal.Show()
         If e.KeyCode = Keys.Escape Then End
     End Sub
 
