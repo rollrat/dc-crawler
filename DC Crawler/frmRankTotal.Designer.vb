@@ -35,11 +35,12 @@ Partial Class frmRankTotal
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Label3 = New System.Windows.Forms.Label()
         Me.numLastPage = New System.Windows.Forms.NumericUpDown()
         Me.bLoad = New System.Windows.Forms.Button()
@@ -48,7 +49,7 @@ Partial Class frmRankTotal
         Me.tbId = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tChkFinish = New System.Windows.Forms.Timer(Me.components)
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.bExport = New System.Windows.Forms.Button()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,11 +132,21 @@ Partial Class frmRankTotal
         Me.ColumnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ColumnHeader1.Width = 238
         '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Score"
+        Me.ColumnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'ColumnHeader9
         '
         Me.ColumnHeader9.Text = "Comment"
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ColumnHeader9.Width = 68
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Board"
+        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'ColumnHeader2
         '
@@ -151,11 +162,6 @@ Partial Class frmRankTotal
         '
         Me.ColumnHeader5.Text = "fixed"
         Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Text = "Board"
-        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label3
         '
@@ -230,16 +236,23 @@ Partial Class frmRankTotal
         '
         Me.tChkFinish.Interval = 1000
         '
-        'ColumnHeader7
+        'bExport
         '
-        Me.ColumnHeader7.Text = "Score"
-        Me.ColumnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.bExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.bExport.Location = New System.Drawing.Point(546, 7)
+        Me.bExport.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.bExport.Name = "bExport"
+        Me.bExport.Size = New System.Drawing.Size(108, 23)
+        Me.bExport.TabIndex = 52
+        Me.bExport.Text = "Export"
+        Me.bExport.UseVisualStyleBackColor = True
         '
         'frmRankTotal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(780, 333)
+        Me.Controls.Add(Me.bExport)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.lvDC)
         Me.Controls.Add(Me.Label3)
@@ -289,4 +302,5 @@ Partial Class frmRankTotal
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents tChkFinish As Timer
     Friend WithEvents ColumnHeader7 As ColumnHeader
+    Friend WithEvents bExport As Button
 End Class

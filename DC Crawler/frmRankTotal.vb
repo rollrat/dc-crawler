@@ -73,6 +73,8 @@ Public Class frmRankTotal
     Private lists1 As New Dictionary(Of String, DCTotlaRanking)
     Private lists2 As New Dictionary(Of String, DCTotlaRanking)
 
+    Public listarray As DCRank()
+
     Private Const max_partition As Integer = 2
 
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
@@ -332,7 +334,7 @@ Public Class frmRankTotal
                 count.Add(tmp.score)
                 index += 1
             Next
-            Dim listarray = list.ToArray
+            listarray = list.ToArray
             Dim rank As Integer = 1
             Array.Sort(count.ToArray, listarray)
             Array.Reverse(listarray)
@@ -369,6 +371,11 @@ Public Class frmRankTotal
                 rank += 1
             Next
         End If
+    End Sub
+
+    Private Sub bExport_Click(sender As Object, e As EventArgs) Handles bExport.Click
+        Dim newfrm As New frmRankExport(lists0, lists1, lists2)
+        newfrm.Show()
     End Sub
 
 End Class
