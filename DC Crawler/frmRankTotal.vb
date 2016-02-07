@@ -75,7 +75,7 @@ Public Class frmRankTotal
 
     Public listarray As DCRank()
 
-    Private Const max_partition As Integer = 2
+    Private Const max_partition As Integer = 50
 
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
         If pbStatus.Maximum = pbStatus.Value Then
@@ -132,6 +132,7 @@ Public Class frmRankTotal
     End Function
 
     Private Sub webClient_DownloadStringCompleted(ByVal sender As Object, ByVal e As DownloadStringCompletedEventArgs)
+        On Error Resume Next
         Dim Result As New List(Of DCMapStructure)
         Dim Matches As MatchCollection = Regex.Matches(e.Result, DCMap)
         For Each Match As Match In Matches

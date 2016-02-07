@@ -180,6 +180,12 @@ Public Class frmRankExport
     End Function
 
     Private Sub bExport_Click(sender As Object, e As EventArgs) Handles bExport.Click
+        listarray = Nothing
+
+        process_sort()
+        process_namer()
+        process_format()
+
         If saveFile.ShowDialog = DialogResult.OK Then
             Dim strb As New StringBuilder
             For i As Integer = 0 To listarray.Length - 1
