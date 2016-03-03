@@ -130,8 +130,60 @@ Public Class frmMain
         lvDC.Columns.Clear()
         lvDC.Columns.AddRange(columnsTrans.ToArray)
 
+        ListStingList()
+
         bLoad.PerformClick()
 
+    End Sub
+
+#End Region
+
+#Region "Get Gallery List"
+
+    Public Const DCGallList As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?\);""\s*\>(\w+)\<"
+    Public Const DCGallList1 As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?;""\s?\>(.*?)\<"
+
+    Public Structure DCGallery
+        Dim identification As String
+        Dim name As String
+    End Structure
+
+    Public GallList As New SortedDictionary(Of String, DCGallery)
+
+    Public Function DownloadURL(ByVal address_of_url As String) As String
+        Dim wclient As New Net.WebClient()
+        wclient.Encoding = System.Text.Encoding.UTF8
+        Return wclient.DownloadString(address_of_url)
+    End Function
+
+    Private Sub ListStingList()
+        Dim html As String = DownloadURL("http://wstatic.dcinside.com/gallery/gallindex_iframe_new_gallery.html")
+
+        Dim Matches As MatchCollection = Regex.Matches(html, DCGallList1)
+        For Each Match As Match In Matches
+            Dim galls As DCGallery
+
+            galls.identification = Match.Groups(1).Value
+            galls.name = Match.Groups(2).Value.Trim
+
+            If galls.name.Length <> 0 Then
+                If galls.name(0) = "-"c Then
+                    galls.name = galls.name.Remove(0).Trim
+                End If
+                If galls.name <> "" AndAlso Not GallList.ContainsKey(galls.name) Then
+                    GallList.Add(galls.name, galls)
+                End If
+            End If
+        Next
+
+        For Each gall As KeyValuePair(Of String, DCGallery) In GallList
+            cbId.AutoCompleteCustomSource.Add(gall.Value.name)
+            cbId.Items.Add(gall.Value.name)
+        Next
+    End Sub
+
+    Private Sub cbId_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbId.SelectedIndexChanged
+        bLoad.PerformClick()
     End Sub
 
 #End Region
@@ -146,7 +198,7 @@ Public Class frmMain
     ' 6. Star
     Public Const DCMap As String = "notice"" >(\d+)<[\s\S]*?middle;"">(.*?)</a></td>[\s\S]*?<span title='(.*?)'[\s\S]*?date"" title=""([\s\S]*?)"">.*?<[\s\S]*?hits"">(\d+)<[\s\S]*?hits"">(\d+)<"
 
-    Dim loadedId As String
+    Public loadedId As String
     Dim author As String
 
     Public Structure DCMapStructure
@@ -163,7 +215,7 @@ Public Class frmMain
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
 
         If pbStatus.Maximum = pbStatus.Value Then
-            loadedId = tbId.Text
+            loadedId = GallList(cbId.Text).identification
             author = tbAuthor.Text
             lvDC.Items.Clear()
 
@@ -171,7 +223,7 @@ Public Class frmMain
             pbStatus.Value = 0
 
             For i As Integer = numStartPage.Value To numLastPage.Value
-                GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={tbId.Text}&page={i}")
+                GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={loadedId}&page={i}")
             Next
         End If
     End Sub

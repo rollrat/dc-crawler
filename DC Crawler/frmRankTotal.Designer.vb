@@ -46,10 +46,10 @@ Partial Class frmRankTotal
         Me.bLoad = New System.Windows.Forms.Button()
         Me.numStartPage = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.tbId = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tChkFinish = New System.Windows.Forms.Timer(Me.components)
         Me.bExport = New System.Windows.Forms.Button()
+        Me.tbId = New System.Windows.Forms.TextBox()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -214,15 +214,6 @@ Partial Class frmRankTotal
         Me.Label2.TabIndex = 43
         Me.Label2.Text = "page ="
         '
-        'tbId
-        '
-        Me.tbId.Location = New System.Drawing.Point(43, 8)
-        Me.tbId.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.tbId.Name = "tbId"
-        Me.tbId.Size = New System.Drawing.Size(109, 23)
-        Me.tbId.TabIndex = 42
-        Me.tbId.Text = "programming"
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -246,6 +237,15 @@ Partial Class frmRankTotal
         Me.bExport.TabIndex = 52
         Me.bExport.Text = "Export"
         Me.bExport.UseVisualStyleBackColor = True
+        '
+        'tbId
+        '
+        Me.tbId.Location = New System.Drawing.Point(43, 8)
+        Me.tbId.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.tbId.Name = "tbId"
+        Me.tbId.Size = New System.Drawing.Size(109, 23)
+        Me.tbId.TabIndex = 42
+        Me.tbId.Text = "programming"
         '
         'frmRankTotal
         '
@@ -297,10 +297,10 @@ Partial Class frmRankTotal
     Friend WithEvents bLoad As Button
     Friend WithEvents numStartPage As NumericUpDown
     Friend WithEvents Label2 As Label
-    Friend WithEvents tbId As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents tChkFinish As Timer
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents bExport As Button
+    Friend WithEvents tbId As TextBox
 End Class

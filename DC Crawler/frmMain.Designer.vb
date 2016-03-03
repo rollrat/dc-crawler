@@ -25,7 +25,6 @@ Partial Class frmMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.tbId = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.numStartPage = New System.Windows.Forms.NumericUpDown()
         Me.bLoad = New System.Windows.Forms.Button()
@@ -47,13 +46,11 @@ Partial Class frmMain
         Me.pbStatus = New System.Windows.Forms.ToolStripProgressBar()
         Me.tbAuthor = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.numDelay = New System.Windows.Forms.NumericUpDown()
+        Me.cbId = New System.Windows.Forms.ComboBox()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.menuOpen.SuspendLayout()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
-        CType(Me.numDelay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -65,18 +62,10 @@ Partial Class frmMain
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "id ="
         '
-        'tbId
-        '
-        Me.tbId.Location = New System.Drawing.Point(40, 6)
-        Me.tbId.Name = "tbId"
-        Me.tbId.Size = New System.Drawing.Size(109, 23)
-        Me.tbId.TabIndex = 1
-        Me.tbId.Text = "programming"
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(155, 9)
+        Me.Label2.Location = New System.Drawing.Point(217, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 15)
         Me.Label2.TabIndex = 2
@@ -84,7 +73,7 @@ Partial Class frmMain
         '
         'numStartPage
         '
-        Me.numStartPage.Location = New System.Drawing.Point(202, 6)
+        Me.numStartPage.Location = New System.Drawing.Point(264, 6)
         Me.numStartPage.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.numStartPage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.numStartPage.Name = "numStartPage"
@@ -171,7 +160,7 @@ Partial Class frmMain
         '
         'numLastPage
         '
-        Me.numLastPage.Location = New System.Drawing.Point(312, 6)
+        Me.numLastPage.Location = New System.Drawing.Point(374, 6)
         Me.numLastPage.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.numLastPage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.numLastPage.Name = "numLastPage"
@@ -182,7 +171,7 @@ Partial Class frmMain
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(291, 10)
+        Me.Label3.Location = New System.Drawing.Point(353, 10)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(15, 15)
         Me.Label3.TabIndex = 8
@@ -191,7 +180,7 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(401, 9)
+        Me.Label4.Location = New System.Drawing.Point(484, 10)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(214, 15)
         Me.Label4.TabIndex = 9
@@ -237,32 +226,23 @@ Partial Class frmMain
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "author ="
         '
-        'Label6
+        'cbId
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(633, 10)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(47, 15)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "delay ="
-        '
-        'numDelay
-        '
-        Me.numDelay.Location = New System.Drawing.Point(686, 6)
-        Me.numDelay.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
-        Me.numDelay.Minimum = New Decimal(New Integer() {1500, 0, 0, 0})
-        Me.numDelay.Name = "numDelay"
-        Me.numDelay.Size = New System.Drawing.Size(64, 23)
-        Me.numDelay.TabIndex = 14
-        Me.numDelay.Value = New Decimal(New Integer() {1500, 0, 0, 0})
+        Me.cbId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.cbId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.cbId.FormattingEnabled = True
+        Me.cbId.Location = New System.Drawing.Point(40, 6)
+        Me.cbId.Name = "cbId"
+        Me.cbId.Size = New System.Drawing.Size(155, 23)
+        Me.cbId.TabIndex = 15
+        Me.cbId.Text = "프로그래밍"
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1059, 412)
-        Me.Controls.Add(Me.numDelay)
-        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.cbId)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.tbAuthor)
@@ -273,7 +253,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.bLoad)
         Me.Controls.Add(Me.numStartPage)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.tbId)
         Me.Controls.Add(Me.Label1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -281,20 +260,18 @@ Partial Class frmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(1075, 451)
         Me.Name = "frmMain"
-        Me.Text = "DC Crawler 1.2"
+        Me.Text = "DC Crawler 1.2.1"
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuOpen.ResumeLayout(False)
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        CType(Me.numDelay, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents tbId As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents numStartPage As NumericUpDown
     Friend WithEvents bLoad As Button
@@ -316,6 +293,5 @@ Partial Class frmMain
     Friend WithEvents Label5 As Label
     Friend WithEvents menuOpen As ContextMenuStrip
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents Label6 As Label
-    Friend WithEvents numDelay As NumericUpDown
+    Friend WithEvents cbId As ComboBox
 End Class

@@ -51,6 +51,8 @@ Public Class frmRankCom
         lvDC.Columns.Clear()
         lvDC.Columns.AddRange(columnsTrans.ToArray)
 
+        tbId.Text = frmMain.loadedId
+
     End Sub
 
     Dim loadedIp As String

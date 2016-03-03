@@ -209,6 +209,8 @@ Public Class frmRank
         lvDC.Columns.Clear()
         lvDC.Columns.AddRange(columnsTrans.ToArray)
 
+        tbId.Text = frmMain.loadedId
+
     End Sub
 
 End Class

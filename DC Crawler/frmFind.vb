@@ -338,4 +338,9 @@ Public Class frmFind
         frmActiveTime.Show()
     End Sub
 
+    Public Function DownloadURL(ByVal address_of_url As String) As String
+        Dim wclient As New Net.WebClient()
+        wclient.Encoding = System.Text.Encoding.UTF8
+        Return wclient.DownloadString(address_of_url)
+    End Function
 End Class

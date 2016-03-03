@@ -61,4 +61,10 @@ Public Class frmJujak
 
     End Sub
 
+    Private Sub frmJujak_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        tbId.Text = frmMain.loadedId
+
+    End Sub
+
 End Class
