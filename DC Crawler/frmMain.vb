@@ -140,8 +140,7 @@ Public Class frmMain
 
 #Region "Get Gallery List"
 
-    Public Const DCGallList As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?\);""\s*\>(\w+)\<"
-    Public Const DCGallList1 As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?;""\s?\>(.*?)\<"
+    Public Const DCGallList As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?;""\s?\>(.*?)\<"
 
     Public Structure DCGallery
         Dim identification As String
@@ -159,7 +158,7 @@ Public Class frmMain
     Private Sub ListStingList()
         Dim html As String = DownloadURL("http://wstatic.dcinside.com/gallery/gallindex_iframe_new_gallery.html")
 
-        Dim Matches As MatchCollection = Regex.Matches(html, DCGallList1)
+        Dim Matches As MatchCollection = Regex.Matches(html, DCGallList)
         For Each Match As Match In Matches
             Dim galls As DCGallery
 
