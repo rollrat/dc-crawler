@@ -38,11 +38,11 @@ Partial Class frmRank
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.numDelay = New System.Windows.Forms.NumericUpDown()
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.numDelay = New System.Windows.Forms.NumericUpDown()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -107,7 +107,6 @@ Partial Class frmRank
         Me.tbId.Name = "tbId"
         Me.tbId.Size = New System.Drawing.Size(109, 23)
         Me.tbId.TabIndex = 16
-        Me.tbId.Text = "programming"
         '
         'Label1
         '
@@ -178,6 +177,21 @@ Partial Class frmRank
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ColumnHeader9.Width = 58
         '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "udong"
+        Me.ColumnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "halffix"
+        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "fixed"
+        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -197,21 +211,6 @@ Partial Class frmRank
         Me.numDelay.Size = New System.Drawing.Size(64, 23)
         Me.numDelay.TabIndex = 26
         Me.numDelay.Value = New Decimal(New Integer() {1500, 0, 0, 0})
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "udong"
-        Me.ColumnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Text = "halffix"
-        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "fixed"
-        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'frmRank
         '

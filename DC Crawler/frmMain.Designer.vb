@@ -38,6 +38,7 @@ Partial Class frmMain
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.menuOpen = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.numLastPage = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -65,7 +66,7 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(217, 9)
+        Me.Label2.Location = New System.Drawing.Point(234, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 15)
         Me.Label2.TabIndex = 2
@@ -73,7 +74,7 @@ Partial Class frmMain
         '
         'numStartPage
         '
-        Me.numStartPage.Location = New System.Drawing.Point(264, 6)
+        Me.numStartPage.Location = New System.Drawing.Point(281, 6)
         Me.numStartPage.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.numStartPage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.numStartPage.Name = "numStartPage"
@@ -146,9 +147,9 @@ Partial Class frmMain
         '
         'menuOpen
         '
-        Me.menuOpen.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem})
+        Me.menuOpen.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem, Me.ViewContentsToolStripMenuItem})
         Me.menuOpen.Name = "menuOpen"
-        Me.menuOpen.Size = New System.Drawing.Size(179, 26)
+        Me.menuOpen.Size = New System.Drawing.Size(179, 48)
         '
         'OpenToolStripMenuItem
         '
@@ -158,9 +159,16 @@ Partial Class frmMain
         Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.OpenToolStripMenuItem.Text = "&Open With Browser"
         '
+        'ViewContentsToolStripMenuItem
+        '
+        Me.ViewContentsToolStripMenuItem.Image = CType(resources.GetObject("ViewContentsToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewContentsToolStripMenuItem.Name = "ViewContentsToolStripMenuItem"
+        Me.ViewContentsToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.ViewContentsToolStripMenuItem.Text = "&View Comments"
+        '
         'numLastPage
         '
-        Me.numLastPage.Location = New System.Drawing.Point(374, 6)
+        Me.numLastPage.Location = New System.Drawing.Point(391, 6)
         Me.numLastPage.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.numLastPage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.numLastPage.Name = "numLastPage"
@@ -171,7 +179,7 @@ Partial Class frmMain
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(353, 10)
+        Me.Label3.Location = New System.Drawing.Point(370, 10)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(15, 15)
         Me.Label3.TabIndex = 8
@@ -180,7 +188,7 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(484, 10)
+        Me.Label4.Location = New System.Drawing.Point(503, 8)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(214, 15)
         Me.Label4.TabIndex = 9
@@ -210,8 +218,7 @@ Partial Class frmMain
         '
         'tbAuthor
         '
-        Me.tbAuthor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbAuthor.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbAuthor.Location = New System.Drawing.Point(816, 7)
         Me.tbAuthor.Name = "tbAuthor"
         Me.tbAuthor.Size = New System.Drawing.Size(100, 23)
@@ -219,6 +226,7 @@ Partial Class frmMain
         '
         'Label5
         '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(756, 10)
         Me.Label5.Name = "Label5"
@@ -260,7 +268,7 @@ Partial Class frmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(1075, 451)
         Me.Name = "frmMain"
-        Me.Text = "DC Crawler 1.2.1"
+        Me.Text = "DC Crawler 1.2.2"
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuOpen.ResumeLayout(False)
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).EndInit()
@@ -294,4 +302,5 @@ Partial Class frmMain
     Friend WithEvents menuOpen As ContextMenuStrip
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents cbId As ComboBox
+    Friend WithEvents ViewContentsToolStripMenuItem As ToolStripMenuItem
 End Class

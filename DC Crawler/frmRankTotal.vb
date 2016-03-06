@@ -69,6 +69,7 @@ Public Class frmRankTotal
         Dim board As Integer
         Dim comment As Integer
         Dim name As String
+        Dim ip As String
     End Structure
 
     Private lists0 As New Dictionary(Of String, DCTotlaRanking)
@@ -251,6 +252,7 @@ Public Class frmRankTotal
                 Dim tmp As DCTotlaRanking
                 tmp.board = 0
                 tmp.comment = 0
+                tmp.ip = ""
                 tmp.name = com.author
                 If Match.Groups(0).Value.Contains("/gallercon1.gif") Then
                     com.level = 1
@@ -269,6 +271,19 @@ Public Class frmRankTotal
                     tmp.comment += 1
                     lists2(CutAuthor(com.author)) = tmp
                 Else
+                    'Dim ipMatch As MatchCollection = Regex.Matches(Match.Groups(0).Value, frmFind.DCCommentIp)
+                    'For Each ip As Match In ipMatch
+                    '    tmp.ip = ip.Groups(1).Value
+                    '    tmp.name = tmp.ip
+                    '    Exit For
+                    'Next
+                    'com.level = 0
+                    'If Not lists0.ContainsKey(tmp.ip) Then
+                    '    lists0.Add(tmp.ip, tmp)
+                    'End If
+                    'tmp = lists0(tmp.ip)
+                    'tmp.comment += 1
+                    'lists0(tmp.ip) = tmp
                     com.level = 0
                     If Not lists0.ContainsKey(CutAuthor(com.author)) Then
                         lists0.Add(CutAuthor(com.author), tmp)

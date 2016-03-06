@@ -80,7 +80,6 @@ Partial Class frmFind
         Me.tbAuthor.Name = "tbAuthor"
         Me.tbAuthor.Size = New System.Drawing.Size(116, 23)
         Me.tbAuthor.TabIndex = 1
-        Me.tbAuthor.Text = "yomiko"
         '
         'cbComment
         '
@@ -262,7 +261,6 @@ Partial Class frmFind
         Me.tbId.Name = "tbId"
         Me.tbId.Size = New System.Drawing.Size(109, 23)
         Me.tbId.TabIndex = 17
-        Me.tbId.Text = "programming"
         '
         'Label2
         '

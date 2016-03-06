@@ -245,7 +245,6 @@ Partial Class frmRankTotal
         Me.tbId.Name = "tbId"
         Me.tbId.Size = New System.Drawing.Size(109, 23)
         Me.tbId.TabIndex = 42
-        Me.tbId.Text = "programming"
         '
         'frmRankTotal
         '

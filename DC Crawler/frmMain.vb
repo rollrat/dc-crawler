@@ -16,6 +16,8 @@ Public Class frmMain
     ' Start 2015-12-31 17:45
     ' Last  2016-01-01 12:05
 
+    Public Const DCRecommand As String = "&exception_mode=recommend"
+
     Private Sub numStartPage_ValueChanged(sender As Object, e As EventArgs) Handles numStartPage.ValueChanged
         numLastPage.Minimum = numStartPage.Value
     End Sub
@@ -39,7 +41,6 @@ Public Class frmMain
         Return CType(New PathComparer(), IComparer)
     End Function
 
-    'https://msdn.microsoft.com/ko-kr/library/ms229643(v=vs.90).aspx
     Public Class SortWrapper
         Friend sortItem As ListViewItem
         Friend sortColumn As Integer
@@ -130,7 +131,7 @@ Public Class frmMain
         lvDC.Columns.Clear()
         lvDC.Columns.AddRange(columnsTrans.ToArray)
 
-        ListStingList()
+        ListingGallery()
 
         bLoad.PerformClick()
 
@@ -155,7 +156,7 @@ Public Class frmMain
         Return wclient.DownloadString(address_of_url)
     End Function
 
-    Private Sub ListStingList()
+    Private Sub ListingGallery()
         Dim html As String = DownloadURL("http://wstatic.dcinside.com/gallery/gallindex_iframe_new_gallery.html")
 
         Dim Matches As MatchCollection = Regex.Matches(html, DCGallList)
@@ -167,7 +168,7 @@ Public Class frmMain
 
             If galls.name.Length <> 0 Then
                 If galls.name(0) = "-"c Then
-                    galls.name = galls.name.Remove(0).Trim
+                    galls.name = galls.name.Remove(0, 1).Trim
                 End If
                 If galls.name <> "" AndAlso Not GallList.ContainsKey(galls.name) Then
                     GallList.Add(galls.name, galls)
@@ -210,6 +211,16 @@ Public Class frmMain
         Dim star As Integer
         Dim level As Integer
     End Structure
+
+    Public Function GetLastPageFromId(id As String) As Integer
+        Dim html As String = DownloadURL($"http://gall.dcinside.com/board/lists/?id={cbId.Text}&page=1")
+
+        Dim Matches As MatchCollection = Regex.Matches(html, "&page=(\d+)"" class=""b_next""><span class=""arrow_2"">맨뒤")
+        For Each Match As Match In Matches
+            Return Match.Groups(1).Value
+        Next
+        Return 1
+    End Function
 
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
 
@@ -380,11 +391,14 @@ Public Class frmMain
     Private Sub lvDC_DoubleClick(sender As Object, e As EventArgs) Handles lvDC.DoubleClick
 
         Dim notice As String = lvDC.SelectedItems(0).SubItems(0).Text
+        Dim title As String = lvDC.SelectedItems(0).SubItems(1).Text
+        Dim author As String = lvDC.SelectedItems(0).SubItems(2).Text
         Dim counts As Integer = Convert.ToInt32(lvDC.SelectedItems(0).SubItems(4).Text)
-        Dim page As String = 1
+        Dim Result As New List(Of DCCommenttructure)
 
         If counts > 0 Then
-            Dim Result As New List(Of DCCommenttructure)
+
+            Dim page As String = 1
 
             Do
                 Result.AddRange(GetCommentsHtml(loadedId, notice, page))
@@ -392,10 +406,11 @@ Public Class frmMain
                 page += 1
             Loop While counts > 0
 
-            Dim newfrm As New frmComment(Result)
-            newfrm.Show()
         End If
 
+        Dim newfrm As New frmViewer($"http://gall.dcinside.com/board/view/?id={loadedId}&no={lvDC.SelectedItems(0).SubItems(0).Text}", title, author, Result)
+        newfrm.Show()
+        Exit Sub
     End Sub
 
 #End Region
@@ -417,6 +432,29 @@ Public Class frmMain
         For Each i As ListViewItem In lvDC.SelectedItems
             Process.Start($"http://gall.dcinside.com/board/view/?id={loadedId}&no={lvDC.SelectedItems(0).SubItems(0).Text}")
             Exit Sub
+        Next
+    End Sub
+
+    Private Sub ViewContentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewContentsToolStripMenuItem.Click
+        For Each i As ListViewItem In lvDC.SelectedItems
+
+            Dim notice As String = lvDC.SelectedItems(0).SubItems(0).Text
+            Dim counts As Integer = Convert.ToInt32(lvDC.SelectedItems(0).SubItems(4).Text)
+            Dim page As String = 1
+
+            If counts > 0 Then
+                Dim Result As New List(Of DCCommenttructure)
+
+                Do
+                    Result.AddRange(GetCommentsHtml(loadedId, notice, page))
+                    counts -= replypage_max
+                    page += 1
+                Loop While counts > 0
+
+                Dim newfrm As New frmComment(Result)
+                newfrm.Show()
+            End If
+
         Next
     End Sub
 

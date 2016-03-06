@@ -52,6 +52,8 @@ Public Class frmFind
         Next
         lvResult.Columns.Clear()
         lvResult.Columns.AddRange(columnsTrans.ToArray)
+
+        tbId.Text = frmMain.loadedId
     End Sub
 
     Dim loadedIp As String
@@ -343,4 +345,5 @@ Public Class frmFind
         wclient.Encoding = System.Text.Encoding.UTF8
         Return wclient.DownloadString(address_of_url)
     End Function
+
 End Class
