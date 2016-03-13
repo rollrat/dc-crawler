@@ -192,11 +192,12 @@ Public Class frmMain
 
     ' 1. Notice
     ' 2. Title [With Comments Count]
-    ' 3. Author
-    ' 4. Date
-    ' 5. Clicks
-    ' 6. Star
-    Public Const DCMap As String = "notice"" >(\d+)<[\s\S]*?middle;"">(.*?)</a></td>[\s\S]*?<span title='(.*?)'[\s\S]*?date"" title=""([\s\S]*?)"">.*?<[\s\S]*?hits"">(\d+)<[\s\S]*?hits"">(\d+)<"
+    ' 3. User Id
+    ' 4. Author
+    ' 5. Date
+    ' 6. Clicks
+    ' 7. Star
+    Public Const DCMap As String = "notice"" >(\d+)<[\s\S]*?middle;"">(.*?)</a></td>[\s\S]*?user_id='(.*?)' user_name.*?<span title='(.*?)'[\s\S]*?date"" title=""([\s\S]*?)"">.*?<[\s\S]*?hits"">(\d+)<[\s\S]*?hits"">(\d+)<"
 
     Public loadedId As String
     Dim author As String
@@ -210,6 +211,7 @@ Public Class frmMain
         Dim clicks As Integer
         Dim star As Integer
         Dim level As Integer
+        Dim userid As String
     End Structure
 
     Public Function GetLastPageFromId(id As String) As Integer
@@ -222,9 +224,18 @@ Public Class frmMain
         Return 1
     End Function
 
+    Private UserIdData As New Dictionary(Of Integer, String)
+
     Private Sub bLoad_Click(sender As Object, e As EventArgs) Handles bLoad.Click
 
         If pbStatus.Maximum = pbStatus.Value Then
+
+            If Not GallList.ContainsKey(cbId.Text) Then
+                MsgBox("존재하지 않는 갤러리입니다.", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+
+            UserIdData.Clear()
             loadedId = GallList(cbId.Text).identification
             author = tbAuthor.Text
             lvDC.Items.Clear()
@@ -249,7 +260,7 @@ Public Class frmMain
         Dim Result As New List(Of DCMapStructure)
         Dim Matches As MatchCollection = Regex.Matches(e.Result, DCMap)
         For Each Match As Match In Matches
-            Dim map As DCMapStructure
+            Dim map As New DCMapStructure
 
             If author <> "" Then
                 If Not Match.Groups(3).Value.ToUpper.Contains(author.ToUpper) Then
@@ -260,16 +271,19 @@ Public Class frmMain
             With Match
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
-                map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
-                map.clicks = .Groups(5).Value
-                map.star = .Groups(6).Value
+                map.userid = .Groups(3).Value
+                map.author = .Groups(4).Value
+                map.dates = .Groups(5).Value.Substring(0, "0000.00.00 00:00".Length)
+                map.clicks = .Groups(6).Value
+                map.star = .Groups(7).Value
             End With
 
             If Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_default.gif") Then
                 map.level = 1
+                UserIdData.Add(map.notice, map.userid)
             ElseIf Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_fix.gif") Then
                 map.level = 2
+                UserIdData.Add(map.notice, map.userid)
             Else
                 map.level = 0
             End If
@@ -280,6 +294,7 @@ Public Class frmMain
             Else
                 map.comments = 0
             End If
+
             Result.Add(map)
         Next
         For Each map As DCMapStructure In Result
@@ -323,15 +338,16 @@ Public Class frmMain
 
     Public Const replypage_max As Integer = 100
 
-    Public Structure DCCommenttructure
+    Public Structure DCCommentStructure
         Dim author As String
         Dim comments As String
         Dim dates As String
         Dim level As Integer
+        Dim userid As String
     End Structure
 
-    Public Shared Function GetCommentsHtml(id As String, notice As String, page As String) As List(Of DCCommenttructure)
-        Dim Result As New List(Of DCCommenttructure)
+    Public Shared Function GetCommentsHtml(id As String, notice As String, page As String) As List(Of DCCommentStructure)
+        Dim Result As New List(Of DCCommentStructure)
         Try
             Dim Data As String = Nothing
             Data += "id=" + id + "&no=" + notice + "&com_page=" + page + "&write=write"
@@ -348,6 +364,7 @@ Public Class frmMain
             Dim Stream As Stream = Request.GetRequestStream()
             Stream.Write(Bytes, 0, Bytes.Length)
             Stream.Close()
+            Stream.Dispose()
 
             Dim Response As WebResponse = Request.GetResponse
             Dim Reader As New StreamReader(Response.GetResponseStream())
@@ -356,7 +373,7 @@ Public Class frmMain
 
             Dim Matches As MatchCollection = Regex.Matches(HtmlPartial, DCComment)
             For Each Match As Match In Matches
-                Dim com As DCCommenttructure
+                Dim com As New DCCommentStructure
                 With Match
                     com.author = .Groups(1).Value
                     com.comments = .Groups(2).Value
@@ -371,10 +388,17 @@ Public Class frmMain
                     com.author = com.author.Remove(com.author.IndexOf("<img src="""))
                 End If
 
+                Dim tok = Function(ByVal x As String) As String
+                              Dim pos As Integer = x.IndexOf("g_id=") + 5
+                              Return x.Substring(pos, x.IndexOf(">[") - pos - 1)
+                          End Function
+
                 If Match.Groups(0).Value.Contains("/gallercon1.gif") Then
                     com.level = 1
+                    com.userid = tok(Match.Groups(0).Value)
                 ElseIf Match.Groups(0).Value.Contains("/gallercon.gif") Then
                     com.level = 2
+                    com.userid = tok(Match.Groups(0).Value)
                 Else
                     com.level = 0
                 End If
@@ -394,7 +418,7 @@ Public Class frmMain
         Dim title As String = lvDC.SelectedItems(0).SubItems(1).Text
         Dim author As String = lvDC.SelectedItems(0).SubItems(2).Text
         Dim counts As Integer = Convert.ToInt32(lvDC.SelectedItems(0).SubItems(4).Text)
-        Dim Result As New List(Of DCCommenttructure)
+        Dim Result As New List(Of DCCommentStructure)
 
         If counts > 0 Then
 
@@ -443,7 +467,7 @@ Public Class frmMain
             Dim page As String = 1
 
             If counts > 0 Then
-                Dim Result As New List(Of DCCommenttructure)
+                Dim Result As New List(Of DCCommentStructure)
 
                 Do
                     Result.AddRange(GetCommentsHtml(loadedId, notice, page))
@@ -452,6 +476,20 @@ Public Class frmMain
                 Loop While counts > 0
 
                 Dim newfrm As New frmComment(Result)
+                newfrm.Show()
+            End If
+
+        Next
+    End Sub
+
+    Private Sub ViewUserToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewUserToolStripMenuItem.Click
+        For Each i As ListViewItem In lvDC.SelectedItems
+
+            Dim notice As String = lvDC.SelectedItems(0).SubItems(0).Text
+            Dim author As String = lvDC.SelectedItems(0).SubItems(2).Text
+
+            If UserIdData.ContainsKey(notice) Then
+                Dim newfrm As New frmUser(UserIdData(notice), author)
                 newfrm.Show()
             End If
 

@@ -123,13 +123,15 @@ Public Class frmRankCom
         Dim Matches As MatchCollection = Regex.Matches(e.Result, DCMap)
         For Each Match As Match In Matches
             Dim map As DCMapStructure
+
             With Match
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
-                map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
-                map.clicks = .Groups(5).Value
-                map.star = .Groups(6).Value
+                map.userid = .Groups(3).Value
+                map.author = .Groups(4).Value
+                map.dates = .Groups(5).Value.Substring(0, "0000.00.00 00:00".Length)
+                map.clicks = .Groups(6).Value
+                map.star = .Groups(7).Value
             End With
             If map.title.Contains("</a>") Then
                 map.comments = map.title.Split(New String() {"<em>["}, StringSplitOptions.None)(1).Split("]"c)(0).Split("/"c)(0)
@@ -184,7 +186,7 @@ Public Class frmRankCom
 
             Dim Matches As MatchCollection = Regex.Matches(HtmlPartial, DCComment)
             For Each Match As Match In Matches
-                Dim com As DCMapStructure
+                Dim com As New DCMapStructure
                 With Match
                     com.author = .Groups(1).Value
                     com.title = .Groups(2).Value
@@ -199,17 +201,24 @@ Public Class frmRankCom
                     com.author = com.author.Remove(com.author.IndexOf("<img src="""))
                 End If
 
+                Dim tok = Function(ByVal x As String) As String
+                              Dim pos As Integer = x.IndexOf("g_id=") + 5
+                              Return x.Substring(pos, x.IndexOf(">[") - pos - 1)
+                          End Function
+
                 If Match.Groups(0).Value.Contains("/gallercon1.gif") Then
                     com.level = 1
                     If Not lists1.ContainsKey(com.author) Then
                         lists1.Add(com.author, 0)
                     End If
+                    com.userid = tok(Match.Groups(0).Value)
                     lists1(com.author) += 1
                 ElseIf Match.Groups(0).Value.Contains("/gallercon.gif") Then
                     com.level = 2
                     If Not lists2.ContainsKey(com.author) Then
                         lists2.Add(com.author, 0)
                     End If
+                    com.userid = tok(Match.Groups(0).Value)
                     lists2(com.author) += 1
                 Else
                     com.level = 0

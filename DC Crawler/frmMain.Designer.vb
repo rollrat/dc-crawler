@@ -48,6 +48,7 @@ Partial Class frmMain
         Me.tbAuthor = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.cbId = New System.Windows.Forms.ComboBox()
+        Me.ViewUserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.menuOpen.SuspendLayout()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -147,9 +148,9 @@ Partial Class frmMain
         '
         'menuOpen
         '
-        Me.menuOpen.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem, Me.ViewContentsToolStripMenuItem})
+        Me.menuOpen.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem, Me.ViewContentsToolStripMenuItem, Me.ViewUserToolStripMenuItem})
         Me.menuOpen.Name = "menuOpen"
-        Me.menuOpen.Size = New System.Drawing.Size(179, 48)
+        Me.menuOpen.Size = New System.Drawing.Size(179, 70)
         '
         'OpenToolStripMenuItem
         '
@@ -245,6 +246,13 @@ Partial Class frmMain
         Me.cbId.TabIndex = 15
         Me.cbId.Text = "프로그래밍"
         '
+        'ViewUserToolStripMenuItem
+        '
+        Me.ViewUserToolStripMenuItem.Image = CType(resources.GetObject("ViewUserToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewUserToolStripMenuItem.Name = "ViewUserToolStripMenuItem"
+        Me.ViewUserToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.ViewUserToolStripMenuItem.Text = "View &User"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -268,7 +276,7 @@ Partial Class frmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(1075, 451)
         Me.Name = "frmMain"
-        Me.Text = "DC Crawler 1.2.2"
+        Me.Text = "DC Crawler 1.2.3"
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuOpen.ResumeLayout(False)
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).EndInit()
@@ -303,4 +311,5 @@ Partial Class frmMain
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents cbId As ComboBox
     Friend WithEvents ViewContentsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ViewUserToolStripMenuItem As ToolStripMenuItem
 End Class

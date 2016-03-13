@@ -74,10 +74,11 @@ Public Class frmRank
             With Match
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
-                map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
-                map.clicks = .Groups(5).Value
-                map.star = .Groups(6).Value
+                map.userid = .Groups(3).Value
+                map.author = .Groups(4).Value
+                map.dates = .Groups(5).Value.Substring(0, "0000.00.00 00:00".Length)
+                map.clicks = .Groups(6).Value
+                map.star = .Groups(7).Value
             End With
 
             If Match.Groups(0).Value.Contains("<img src='http://wstatic.dcinside.com/gallery/skin/gallog/g_default.gif") Then

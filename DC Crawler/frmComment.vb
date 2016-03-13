@@ -8,13 +8,13 @@
 
 Public Class frmComment
 
-    Public Sub New(sender As List(Of frmMain.DCCommenttructure))
+    Public Sub New(sender As List(Of frmMain.DCCommentStructure))
 
         ' 디자이너에서 이 호출이 필요합니다.
         InitializeComponent()
 
         ' InitializeComponent() 호출 뒤에 초기화 코드를 추가하세요.
-        For Each com As frmMain.DCCommenttructure In sender
+        For Each com As frmMain.DCCommentStructure In sender
             Dim lvi As ListViewItem = lvCon.Items.Add(New ListViewItem(New String() {
                                             com.author,
                                             com.comments,

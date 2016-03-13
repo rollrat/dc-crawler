@@ -140,14 +140,17 @@ Public Class frmRankTotal
         Dim Matches As MatchCollection = Regex.Matches(e.Result, DCMap)
         For Each Match As Match In Matches
             Dim map As DCMapStructure
+
             With Match
                 map.notice = .Groups(1).Value
                 map.title = .Groups(2).Value
-                map.author = .Groups(3).Value
-                map.dates = .Groups(4).Value.Substring(0, "0000.00.00 00:00".Length)
-                map.clicks = .Groups(5).Value
-                map.star = .Groups(6).Value
+                map.userid = .Groups(3).Value
+                map.author = .Groups(4).Value
+                map.dates = .Groups(5).Value.Substring(0, "0000.00.00 00:00".Length)
+                map.clicks = .Groups(6).Value
+                map.star = .Groups(7).Value
             End With
+
             If map.title.Contains("</a>") Then
                 map.comments = map.title.Split(New String() {"<em>["}, StringSplitOptions.None)(1).Split("]"c)(0).Split("/"c)(0)
                 map.title = map.title.Split("</a>")(0)
@@ -234,7 +237,7 @@ Public Class frmRankTotal
 
             Dim Matches As MatchCollection = Regex.Matches(HtmlPartial, DCComment)
             For Each Match As Match In Matches
-                Dim com As DCMapStructure
+                Dim com As New DCMapStructure
                 With Match
                     com.author = .Groups(1).Value
                     com.title = .Groups(2).Value
@@ -249,6 +252,11 @@ Public Class frmRankTotal
                     com.author = com.author.Remove(com.author.IndexOf("<img src="""))
                 End If
 
+                Dim tok = Function(ByVal x As String) As String
+                              Dim pos As Integer = x.IndexOf("g_id=") + 5
+                              Return x.Substring(pos, x.IndexOf(">[") - pos - 1)
+                          End Function
+
                 Dim tmp As DCTotlaRanking
                 tmp.board = 0
                 tmp.comment = 0
@@ -262,6 +270,7 @@ Public Class frmRankTotal
                     tmp = lists1(CutAuthor(com.author))
                     tmp.comment += 1
                     lists1(CutAuthor(com.author)) = tmp
+                    com.userid = tok(Match.Groups(0).Value)
                 ElseIf Match.Groups(0).Value.Contains("/gallercon.gif") Then
                     com.level = 2
                     If Not lists2.ContainsKey(CutAuthor(com.author)) Then
@@ -270,6 +279,7 @@ Public Class frmRankTotal
                     tmp = lists2(CutAuthor(com.author))
                     tmp.comment += 1
                     lists2(CutAuthor(com.author)) = tmp
+                    com.userid = tok(Match.Groups(0).Value)
                 Else
                     'Dim ipMatch As MatchCollection = Regex.Matches(Match.Groups(0).Value, frmFind.DCCommentIp)
                     'For Each ip As Match In ipMatch

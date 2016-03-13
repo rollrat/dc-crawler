@@ -92,9 +92,9 @@ Partial Class frmViewer
         Me.lbTitle.Font = New System.Drawing.Font("맑은 고딕", 11.0!)
         Me.lbTitle.Location = New System.Drawing.Point(3, 3)
         Me.lbTitle.Name = "lbTitle"
-        Me.lbTitle.Size = New System.Drawing.Size(53, 20)
+        Me.lbTitle.Size = New System.Drawing.Size(51, 20)
         Me.lbTitle.TabIndex = 0
-        Me.lbTitle.Text = "Label1"
+        Me.lbTitle.Text = "lbTitle"
         '
         'lvCon
         '

@@ -145,6 +145,12 @@
     <Compile Include="frmRankTotal.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmUser.Designer.vb">
+      <DependentUpon>frmUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmViewer.Designer.vb">
       <DependentUpon>frmViewer.vb</DependentUpon>
     </Compile>
@@ -194,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRankTotal.resx">
       <DependentUpon>frmRankTotal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUser.resx">
+      <DependentUpon>frmUser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmViewer.resx">
       <DependentUpon>frmViewer.vb</DependentUpon>

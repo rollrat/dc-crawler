@@ -8,7 +8,7 @@
 
 Public Class frmViewer
 
-    Public Sub New(address As String, title As String, author As String, sender As List(Of frmMain.DCCommenttructure))
+    Public Sub New(address As String, title As String, author As String, sender As List(Of frmMain.DCCommentStructure))
 
         ' 디자이너에서 이 호출이 필요합니다.
         InitializeComponent()
@@ -18,7 +18,7 @@ Public Class frmViewer
             New String() {"<!-- con_substance -->"}, StringSplitOptions.None)(1).Split(
             New String() {"<!-- //con_substance -->"}, StringSplitOptions.None)(0) & "</font>"
 
-        For Each com As frmMain.DCCommenttructure In sender
+        For Each com As frmMain.DCCommentStructure In sender
             Dim lvi As ListViewItem = lvCon.Items.Add(New ListViewItem(New String() {
                                             com.author,
                                             com.comments,
