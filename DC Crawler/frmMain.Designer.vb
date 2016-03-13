@@ -244,7 +244,7 @@ Partial Class frmMain
         Me.cbId.Name = "cbId"
         Me.cbId.Size = New System.Drawing.Size(155, 23)
         Me.cbId.TabIndex = 15
-        Me.cbId.Text = "프로그래밍"
+        Me.cbId.Text = "HIT"
         '
         'ViewUserToolStripMenuItem
         '
