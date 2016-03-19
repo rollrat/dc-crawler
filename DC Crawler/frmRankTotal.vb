@@ -158,7 +158,7 @@ Public Class frmRankTotal
                 map.comments = 0
             End If
 
-            Dim tmp As DCTotlaRanking
+            Dim tmp As New DCTotlaRanking
             tmp.board = 0
             tmp.comment = 0
             tmp.name = map.author

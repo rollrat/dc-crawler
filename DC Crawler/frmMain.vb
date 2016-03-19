@@ -449,6 +449,7 @@ Public Class frmMain
         If e.KeyCode = Keys.F4 Then frmRank.Show()
         If e.KeyCode = Keys.F5 Then frmRankCom.Show()
         If e.KeyCode = Keys.F6 Then frmRankTotal.Show()
+        If e.KeyCode = Keys.F7 Then frmData.Show()
         If e.KeyCode = Keys.Escape Then End
     End Sub
 
