@@ -142,6 +142,7 @@ Public Class frmMain
 #Region "Get Gallery List"
 
     Public Const DCGallList As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?;""\s?\>(.*?)\<"
+    Public Const DCGallListOther As String = "onmouseover=""gallery_view\('(\w+)'\);"" \>(\w+)\<"
 
     Public Structure DCGallery
         Dim identification As String
@@ -173,6 +174,18 @@ Public Class frmMain
                 If galls.name <> "" AndAlso Not GallList.ContainsKey(galls.name) Then
                     GallList.Add(galls.name, galls)
                 End If
+            End If
+        Next
+
+        Dim Matches2 As MatchCollection = Regex.Matches(html, DCGallListOther)
+        For Each Match As Match In Matches2
+            Dim galls As DCGallery
+
+            galls.identification = Match.Groups(1).Value
+            galls.name = Match.Groups(2).Value.Trim
+
+            If galls.name.Length <> 0 AndAlso galls.name <> "" AndAlso Not GallList.ContainsKey(galls.name) Then
+                GallList.Add(galls.name, galls)
             End If
         Next
 
