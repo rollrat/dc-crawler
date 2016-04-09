@@ -7,18 +7,21 @@ DC-Crawler는 방대양한 양의 특정 자료를 수집, 검색하기 위한 �
 
 ### 주요창
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/1.png)
+
 프로그램 실행시 처음으로 보게될 창이다. 이 창은 설정된 갤러리에 해당하는 게시글을 보여준다. 먼저 왼쪽 상단의 `id`는 갤러리의 이름을 입력한다(검색 기능을 지원한다.) `page`부분은 불러올 페이지를 설정한다. 아마 쓸데는 없을 것 같다. `author`부분은 특정 작성자의 글을 불러온다. `Load`버튼으로 설정된 값을 실행한다.
 
 노란색으로 채워진 게시글은 작성자가 고정닉인 경우이고, 회색과 흰색은 각각 비고정닉, 유동닉인 경우이다. 이는 이하 창들에도 모두 적용된다.
 
 #### 열람창
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/5.png)
+
 각 게시물 항목에서 오른쪽 마우스 버튼을 누르면 해당하는 게시물의 댓글과 내용을 열람할 수 있다.
 
 이 창에선 몇 가지 단축키로 다른 기능을 접근할 수 있다.
 
 ### 검색창 (F2 키)
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/2.png)
+
 특정사용자의 닉네임이나 IP주소 두 자리로 해당하는 모든 글과 댓글을 가져온다. 오른쪽 상단의 체크박스 버튼으로 댓글만이나 게시글만 가져올 수 있도록 설정할 수 있다. 오른쪽 아래 `Start`버튼으로 찾기를 시작한다. 단, 이 버튼 바로옆 `Author`, `IP`중 하나를 체크하고 진행한다.
 
 검색하는 중 왼쪽 하단의 `Save`버튼으로 가져온 정보를 저장할 수 있다. 가장 최근 업데이트에선 모든 항목마다 Author을 표시할 수 있게 만들었다.
@@ -27,14 +30,17 @@ DC-Crawler는 방대양한 양의 특정 자료를 수집, 검색하기 위한 �
 
 ### 종합 랭킹 (F4, F5, F6 키)
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/3.png)
+
 특정 갤러리에서 특정 페이지 내에 존재하는 사용자들의 게시글, 댓글 개수를 순위를 매겨 표현한다. 이 순위는 `게시글 수 * 2.5 + 댓글 수 * 1.5`식을 따른 종합 랭킹 점수(Score)를 기준으로한 순위이다.
 
 #### 출력창
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/4.png)
+
 `Export`는 랭킹을 특정 설정값에 따라 파일로 출력하는 도구이다. 설명은 생략한다.
 
 ### DC-Data (F7 키)
 ![alt tag](https://github.com/rollrat/dc-crawler/blob/master/DC%20Crawler/6.png)
+
 이 창은 크롤러의 본체라 할 수 있는 크롤링 전용 창이다. 해당하는 갤러리의 `id`와 페이지를 설정한 후 `Start`버튼을 누르면 모든 댓글에 관한 정보, 게시글 정보를 다운로드하여 `...\년도\월\일\게시글번호`폴더의 형태로 저장한다. 이 기능은 한창 개발 중에 있고, 아직 수집 기능만 지원한다.
 
 
