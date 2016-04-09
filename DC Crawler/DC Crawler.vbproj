@@ -236,12 +236,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Figure\1.png" />
-    <Content Include="Figure\2.PNG" />
-    <Content Include="Figure\3.png" />
-    <Content Include="Figure\4.png" />
-    <Content Include="Figure\5.png" />
-    <Content Include="Figure\6.png" />
+    <Content Include="1.png" />
+    <Content Include="2.png" />
+    <Content Include="3.png" />
+    <Content Include="4.png" />
+    <Content Include="5.png" />
+    <Content Include="6.png" />
     <Content Include="TETO.ico" />
   </ItemGroup>
   <ItemGroup>
