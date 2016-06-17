@@ -141,8 +141,8 @@ Public Class frmMain
 
 #Region "Get Gallery List"
 
-    Public Const DCGallList As String = "gall\.dcinside\.com\/board\/lists\/\?id\=(\w+)\""[\s\S]*?;""\s?\>(.*?)\<"
-    Public Const DCGallListOther As String = "onmouseover=""gallery_view\('(\w+)'\);"" \>(\w+)\<"
+    Public Const DCGallList As String = "onmouseover=""gallery_view\('(\w+)'\);""\>[\s\S]*?\<.*?\>(\w+)\<"
+    Public Const DCGallListOther As String = "onmouseover\=""gallery_view\('(\w+)'\);""\>\s*(\w+)\<"
 
     Public Structure DCGallery
         Dim identification As String

@@ -39,6 +39,7 @@ Partial Class frmMain
         Me.menuOpen = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewUserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.numLastPage = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -48,7 +49,6 @@ Partial Class frmMain
         Me.tbAuthor = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.cbId = New System.Windows.Forms.ComboBox()
-        Me.ViewUserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.menuOpen.SuspendLayout()
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,9 +60,9 @@ Partial Class frmMain
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(9, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(29, 15)
+        Me.Label1.Size = New System.Drawing.Size(49, 15)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "id ="
+        Me.Label1.Text = "name ="
         '
         'Label2
         '
@@ -167,6 +167,13 @@ Partial Class frmMain
         Me.ViewContentsToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
         Me.ViewContentsToolStripMenuItem.Text = "&View Comments"
         '
+        'ViewUserToolStripMenuItem
+        '
+        Me.ViewUserToolStripMenuItem.Image = CType(resources.GetObject("ViewUserToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewUserToolStripMenuItem.Name = "ViewUserToolStripMenuItem"
+        Me.ViewUserToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
+        Me.ViewUserToolStripMenuItem.Text = "View &User"
+        '
         'numLastPage
         '
         Me.numLastPage.Location = New System.Drawing.Point(391, 6)
@@ -240,18 +247,11 @@ Partial Class frmMain
         Me.cbId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.cbId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.cbId.FormattingEnabled = True
-        Me.cbId.Location = New System.Drawing.Point(40, 6)
+        Me.cbId.Location = New System.Drawing.Point(64, 7)
         Me.cbId.Name = "cbId"
         Me.cbId.Size = New System.Drawing.Size(155, 23)
         Me.cbId.TabIndex = 15
         Me.cbId.Text = "HIT"
-        '
-        'ViewUserToolStripMenuItem
-        '
-        Me.ViewUserToolStripMenuItem.Image = CType(resources.GetObject("ViewUserToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ViewUserToolStripMenuItem.Name = "ViewUserToolStripMenuItem"
-        Me.ViewUserToolStripMenuItem.Size = New System.Drawing.Size(178, 22)
-        Me.ViewUserToolStripMenuItem.Text = "View &User"
         '
         'frmMain
         '
@@ -276,7 +276,7 @@ Partial Class frmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(1075, 451)
         Me.Name = "frmMain"
-        Me.Text = "DC Crawler 1.2.3"
+        Me.Text = "DC Crawler 1.2.4"
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuOpen.ResumeLayout(False)
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).EndInit()
