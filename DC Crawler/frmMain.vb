@@ -75,7 +75,10 @@ Public Class frmMain
                 Dim yText As String = yItem.sortItem.SubItems(yItem.sortColumn).Text
 
                 If IsNumeric(xText) AndAlso IsNumeric(yText) Then
-                    Return IIf(Convert.ToInt32(xText) >= Convert.ToInt32(yText), 1, -1) * IIf(Me.ascending, 1, -1)
+                    Try
+                        Return IIf(Convert.ToInt32(xText) >= Convert.ToInt32(yText), 1, -1) * IIf(Me.ascending, 1, -1)
+                    Catch ex As Exception
+                    End Try
                 End If
 
                 Return ComparePath(xText, yText) * IIf(Me.ascending, 1, -1)
