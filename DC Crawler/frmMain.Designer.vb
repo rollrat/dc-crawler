@@ -276,7 +276,7 @@ Partial Class frmMain
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(1075, 451)
         Me.Name = "frmMain"
-        Me.Text = "DC Crawler 1.2.4"
+        Me.Text = "DC Crawler 1.2.5"
         CType(Me.numStartPage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menuOpen.ResumeLayout(False)
         CType(Me.numLastPage, System.ComponentModel.ISupportInitialize).EndInit()

@@ -213,7 +213,7 @@ Public Class frmMain
     ' 5. Date
     ' 6. Clicks
     ' 7. Star
-    Public Const DCMap As String = "notice"" >(\d+)<[\s\S]*?middle;"">(.*?)</a></td>[\s\S]*?user_id='(.*?)' user_name.*?<span title='(.*?)'[\s\S]*?date"" title=""([\s\S]*?)"">.*?<[\s\S]*?hits"">(\d+)<[\s\S]*?hits"">(\d+)<"
+    Public Const DCMap As String = "notice"" >(\d+)<[\s\S]*?middle;"">(.*?)</a></td>[\s\S]*?user_id='(.*?)' user_name=""(.*?)""[\s\S]*?date"" title=""([\s\S]*?)"">.*?<[\s\S]*?hits"">(\d+)<[\s\S]*?hits"">(\d+)<"
 
     Public loadedId As String
     Dim author As String
