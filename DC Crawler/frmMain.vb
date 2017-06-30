@@ -260,9 +260,16 @@ Public Class frmMain
             pbStatus.Value = 0
 
             For i As Integer = numStartPage.Value To numLastPage.Value
+                EmergencyGetHtmlSource($"http://gall.dcinside.com/board/lists/?id={loadedId}&page={i}")
                 GetDCMapFromUrlAnsyc($"http://gall.dcinside.com/board/lists/?id={loadedId}&page={i}")
             Next
+
         End If
+    End Sub
+
+    Private Sub EmergencyGetHtmlSource(ByVal addr As String)
+        Dim sourceString As String = New System.Net.WebClient().DownloadString(addr)
+        MsgBox(sourceString)
     End Sub
 
     Private Sub GetDCMapFromUrlAnsyc(ByVal addr As String)
